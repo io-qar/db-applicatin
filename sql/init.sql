@@ -1,5 +1,3 @@
--- DROP DATABASE cameraproject;
-
 CREATE DATABASE IF NOT EXISTS cameraproject;
 CREATE USER IF NOT EXISTS 'user'@'%';
 ALTER USER 'user'@'%' IDENTIFIED BY 'password';
@@ -21,7 +19,8 @@ CREATE TABLE IF NOT EXISTS cameraproject.Cars (
 CREATE TABLE IF NOT EXISTS cameraproject.Db_users (
 	userId int PRIMARY KEY AUTO_INCREMENT,
 	name text NOT NULL,
-	password text NOT NULL
+	password text NOT NULL,
+	user_privilege ENUM('admin','user') DEFAULT 'user' NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Files (
@@ -30,7 +29,7 @@ CREATE TABLE IF NOT EXISTS cameraproject.Files (
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Facts (
-	factId int PRIMARY KEY AUTO_INCREMENT,
+	factId INT PRIMARY KEY AUTO_INCREMENT,
 	cameraId int NOT NULL,
 	regPlate varchar(11) NOT NULL,
 	fileId int NOT NULL,
@@ -73,17 +72,17 @@ insert into Cameras (address,setting) values
 	('пр. Запрудный, д. 325 к. 2/4','sign'),
 	('алл. Комарова, д. 8 стр. 86','sign');
 
--- insert into Car (regPlate,model) values
--- 	('000D065 58','АО «Симонов-Фокин»'),
--- 	('001CD7 80','РАО «Захарова Миронова»'),
--- 	('002D386 83','ТАИФ-НК'),
--- 	('002D571 77','Максимов Лтд'),
--- 	('003CD5 08','Зарубежнефть'),
--- 	('004CD7 102','Нестле Россия'),
--- 	('005CD7 16','НПО «Белозеров Королев»'),
--- 	('005T121 27','НПО «Шилова-Богданова»'),
--- 	('006CD0 22','Фаберлик'),
--- 	('006CD4 799','АО «Туров, Богданова и Фомина»');
+insert into Cars (regPlate,model) values
+	('000D065 58','Kia Rio'),
+	('001CD7 80','Lada Vesta'),
+	('002D386 83','Skada Kodiaq'),
+	('002D571 77','BMW X6'),
+	('003CD5 08','Honda Pilot'),
+	('004CD7 102','Ford Transit'),
+	('005CD7 16','Nissan Qashai'),
+	('005T121 27','Tayota Camry'),
+	('006CD0 22','Renault Logan'),
+	('006CD4 799','Mitsubishi Pajero');
 
 -- insert into cameraproject.file (fileLink) values
 -- 	('https://placekitten.com/548/847'),
