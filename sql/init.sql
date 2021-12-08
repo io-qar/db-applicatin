@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS cameraproject.Cameras (
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Cars (
-	regPlate varchar(11) PRIMARY KEY,
+	carId varchar(11) PRIMARY KEY,
 	model text NOT NULL
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS cameraproject.Facts (
 	CONSTRAINT files_ibfk_1 FOREIGN KEY (fileId) REFERENCES Files (fileId)
 );
 
-CREATE TABLE IF NOT EXISTS cameraproject.Vehicle_owner (
+CREATE TABLE IF NOT EXISTS cameraproject.Vehicle_owners (
 	cardId int PRIMARY KEY NOT NULL,
 	name varchar(20) NOT NULL,
 	carReg varchar(11) NOT NULL,
