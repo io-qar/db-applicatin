@@ -1,10 +1,12 @@
+-- DROP DATABASE cameraproject;
+
 CREATE DATABASE IF NOT EXISTS cameraproject;
 CREATE USER IF NOT EXISTS 'user'@'%';
 ALTER USER 'user'@'%' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON cameraproject.* TO 'user'@'%';
 FLUSH PRIVILEGES;
 USE cameraproject;
-
+	
 CREATE TABLE IF NOT EXISTS cameraproject.Cameras (
 	cameraId int PRIMARY KEY AUTO_INCREMENT,
 	address text NOT NULL,
@@ -12,15 +14,14 @@ CREATE TABLE IF NOT EXISTS cameraproject.Cameras (
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Cars (
-	carId varchar(11) PRIMARY KEY,
+	regPlate varchar(11) PRIMARY KEY,
 	model text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Db_users (
 	userId int PRIMARY KEY AUTO_INCREMENT,
 	name text NOT NULL,
-	password text NOT NULL,
-	user_privilege ENUM('admin','user') DEFAULT 'user' NOT NULL
+	password text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Files (
@@ -29,7 +30,7 @@ CREATE TABLE IF NOT EXISTS cameraproject.Files (
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Facts (
-	factId INT PRIMARY KEY AUTO_INCREMENT,
+	factId int PRIMARY KEY AUTO_INCREMENT,
 	cameraId int NOT NULL,
 	regPlate varchar(11) NOT NULL,
 	fileId int NOT NULL,
@@ -42,11 +43,11 @@ CREATE TABLE IF NOT EXISTS cameraproject.Facts (
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Vehicle_owners (
-	cardId int PRIMARY KEY NOT NULL,
-	name varchar(20) NOT NULL,
-	carReg varchar(11) NOT NULL,
-	KEY carReg (carReg),
-	CONSTRAINT vehicleowner_ibfk_1 FOREIGN KEY (carReg) REFERENCES Cars (regPlate)
+  cardId int PRIMARY KEY NOT NULL,
+  name varchar(20) NOT NULL,
+  carReg varchar(11) NOT NULL,
+  KEY carReg (carReg),
+  CONSTRAINT vehicleowner_ibfk_1 FOREIGN KEY (carReg) REFERENCES Cars (regPlate)
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Fines (
@@ -57,7 +58,7 @@ CREATE TABLE IF NOT EXISTS cameraproject.Fines (
 	setting enum('speed','line','sign') NOT NULL,
 	KEY userId (userId),
  	CONSTRAINT fine_ibfk_1 FOREIGN KEY (userId) REFERENCES Db_users (userId),
- 	CONSTRAINT fine_ibfk_2 FOREIGN KEY (ownerId) REFERENCES Vehicle_owner (cardId)
+ 	CONSTRAINT fine_ibfk_2 FOREIGN KEY (ownerId) REFERENCES Vehicle_owners (cardId)
 );
 
 insert into Cameras (address,setting) values
