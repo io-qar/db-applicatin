@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS cameraproject.Cars (
 CREATE TABLE IF NOT EXISTS cameraproject.Db_users (
 	userId int PRIMARY KEY AUTO_INCREMENT,
 	name text NOT NULL,
-	password text NOT NULL
+	password text NOT NULL,
+	user_privilege enum('admin', 'user') not null default 'user'
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Files (

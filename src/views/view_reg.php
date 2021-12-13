@@ -13,6 +13,9 @@
 		<input name="password" type="password" size="50" maxlength="50" required>
 	</p>
 	<p>
+		<input name="admin" type="checkbox" value="admin">
+		<label>Cуперадмин<br></label>
+
 		<input type="submit" name="submit" value="Зарегистрироваться">
 	</p>
 </form>

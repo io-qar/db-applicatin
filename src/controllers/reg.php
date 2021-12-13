@@ -12,7 +12,7 @@
 			unset($password);
 		}
 	}
-	
+
 	if (empty($name) or empty($password)) {
 		exit("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
 	}
@@ -32,9 +32,13 @@
 	if (!empty($myrow['userId'])) {
 		exit ("Извините, введённый вами логин уже зарегистрирован. Введите другой логин.");
 	}
+	
+	if (isset($_POST['admin'])) {
+		$prv = $_POST['admin'];
+		$result = $mysqli->query("INSERT INTO Db_users (name, password, user_privilege) VALUES ('$name', '$password', '$prv')");
+	} else $result = $mysqli->query("INSERT INTO Db_users (name, password) VALUES ('$name', '$password')");
 
-	$result2 = $mysqli->query("INSERT INTO Db_users (name, password) VALUES ('$name', '$password')");
-	if ($result2) {
+	if ($result) {
 		echo "Вы успешно зарегистрированы! Перенапрвление на главную через 5 секунд";
 		header('Refresh: 5; url="../index.php"');
 	} else {
