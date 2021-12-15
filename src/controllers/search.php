@@ -1,47 +1,36 @@
 <?php
+	$title_name = 'Результаты поиска';
 	include $_SERVER['DOCUMENT_ROOT'].'/controllers/connect.php';
+	include $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
+	include $_SERVER['DOCUMENT_ROOT'].'/models/search_model.php';
 
-	function idSearch($tbl, $inputSearch) {
-		// global $mysqli;
-		$sql_search = match($tbl) {
-			'Cameras' => "SELECT * FROM Cameras WHERE cameraId = $inputSearch or address like '%$inputSearch%'", // or setting = ".$inputSearch.",
-			'Facts' => "SELECT * FROM Facts WHERE factId = $inputSearch or cameraId = $inputSearch or regPlate like '%$inputSearch%'",
-			'Cars' => "SELECT * FROM Cars WHERE regPlate = $inputSearch or model like '%$inputSearch%'",
-			'Vehicle_owners' => "SELECT * FROM Vehicle_owners WHERE cardId = $inputSearch or name like '%$inputSearch%' or carReg like '%$inputSearch%'",
-			'Fines' => "SELECT * FROM Fines WHERE fineId = $inputSearch or userId = $inputSearch or ownerId = $inputSearch or datetime like '%$inputSearch%'", // or setting = ".$inputSearch."
-		};
+	$search = new Search();
 
-		global $mysqli;
-		$search_result = $mysqli->query($sql_search);
-		$rows = $search_result->fetch_all(MYSQLI_ASSOC);
+	if (isset($_POST['carSearch'])) {
+		$inputSearch = $_POST['carSearch'];
+		$sql_output = $search->carSearch($inputSearch);
+	} elseif (isset($_POST['cameraSearch'])) {
+		$inputSearch = $_POST['cameraSearch'];
+		$sql_output = $search->cameraSearch($inputSearch);
+	// elseif (isset($_POST['search']) and isset($_POST['table'])) {
+	// 	$inputSearch = $_POST['search'];
+	// 	$inputTable = $_POST['table'];
 
-		foreach ($rows as $row=>$result) {
-			// echo "ID: ".$row['cameraId']."<br>";
-			// echo "Адрес: ".$row['address']."<br>";
-			// echo "Настройка:".$row['setting']."<br>";
-
-			foreach ($result as $key=>$value) {
-				echo $key."->".$value;
-				echo '<br>';
-				// echo $result[$key]."<br>";
-			}
-			// echo $result[$key]."<br>";
-			
-			echo '<hr>';
-		}
+	// 	$tbl = match($inputTable) {
+	// 		'По камерам' => 'Cameras',
+	// 		'По фактам' => 'Facts',
+	// 		'По машинам' => 'Cars',
+	// 		'По владельцам' => 'Vehicle_owners',
+	// 		'По штрафам' => 'Fines',
+	// 	};
+	// 	$sql_output = $search->idSearch($tbl, $inputSearch);
+	} elseif (isset($_POST['ownerSearch'])) {
+		$inputSearch = $_POST['ownerSearch'];
+		$sql_output = $search->ownerSearch($inputSearch);
+	} elseif (isset($_POST['searchFines'])) {
+		$inputSearch = $_POST['searchFines'];
+		$sql_output = $search->fineSearch($inputSearch);
 	}
 
-	$inputSearch = $_POST['search'];
-	$inputTable = $_POST['table'];
-
-	$tbl = match($inputTable) {
-		'По камерам' => 'Cameras',
-		'По фактам' => 'Facts',
-		'По машинам' => 'Cars',
-		'По владельцам' => 'Vehicle_owners',
-		'По штрафам' => 'Fines',
-	};
-	
-	
-	idSearch($tbl, $inputSearch);
+	$search->output($sql_output);
 ?>

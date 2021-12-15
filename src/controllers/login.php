@@ -30,11 +30,11 @@
 	if (empty($myrow['password'])) {
 		exit ("Извините, введённый вами name или пароль неверный.");
 	} else {
-		
 		if ($myrow['password'] == $password) {
 			$_SESSION['name'] = $myrow['name']; 
 			$_SESSION['userId'] = $myrow['userId'];
-			echo "Вы успешно вошли на сайт как ".$_SESSION['name']." и будете перенаправлены на главную через 3 секунд!";
+			$_SESSION['prv'] = $myrow['user_privilege'];
+			echo 'Вы зашли на сайт под именем '.$_SESSION["name"].' с типом доступа <b>'.$_SESSION['prv'].'</b> и будете перенаправлены на главную через 3 секунд!';
 			header('Refresh: 3; url="../index.php"');
 		} else {
 			exit ("Извините, введённые вами имя или пароль неверные.");

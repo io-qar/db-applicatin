@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS cameraproject.Db_users (
 	userId int PRIMARY KEY AUTO_INCREMENT,
 	name text NOT NULL,
 	password text NOT NULL,
-	user_privilege enum('admin', 'user') not null default 'user'
+	user_privilege enum('admin', 'user') default 'user'
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Files (
@@ -74,6 +74,8 @@ insert into Cameras (address,setting) values
 	('пр. Запрудный, д. 325 к. 2/4','sign'),
 	('алл. Комарова, д. 8 стр. 86','sign');
 
+ALTER TABLE Cameras CONVERT TO CHARACTER SET = utf8;
+
 insert into Cars (regPlate,model) values
 	('000D065 58','Kia Rio'),
 	('001CD7 80','Lada Vesta'),
@@ -85,6 +87,8 @@ insert into Cars (regPlate,model) values
 	('005T121 27','Tayota Camry'),
 	('006CD0 22','Renault Logan'),
 	('006CD4 799','Mitsubishi Pajero');
+
+ALTER TABLE Cars CONVERT TO CHARACTER SET = utf8;
 
 -- insert into cameraproject.file (fileLink) values
 -- 	('https://placekitten.com/548/847'),
