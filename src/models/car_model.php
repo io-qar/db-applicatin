@@ -81,4 +81,17 @@
 				exit("Извините, не удалось сменить настройку на '$newModel'!");
 			}
 		}
+
+		function deleteCar() {
+			global $mysqli;
+			$result = $mysqli->query("DELETE FROM Cars WHERE regPlate = '$this->reg'");
+
+			if ($result) {
+				// $this->setModel($newModel);
+				echo "Информация о ТС была успешно удалена! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
+			} else {
+				exit("Извините, не удалось удалить информация о ТС");
+			}
+		}
 	}

@@ -44,13 +44,11 @@ CREATE TABLE IF NOT EXISTS cameraproject.Facts (
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Vehicle_owners (
-  cardId int PRIMARY KEY NOT NULL,
-  name varchar(20) NOT NULL,
-  carReg varchar(11) NOT NULL,
-  KEY carReg (carReg),
---   CONSTRAINT vehicleowner_ibfk_1 FOREIGN KEY (carReg) REFERENCES Cars (regPlate)
-  ADD CONSTRAINT Vehicle_owners_FK FOREIGN KEY (carReg) REFERENCES Cars(regPlate);
-
+	cardId int PRIMARY KEY NOT NULL,
+	name varchar(20) NOT NULL,
+	carReg varchar(11) NOT NULL,
+	KEY carReg (carReg),
+	CONSTRAINT `Vehicle_owners_FK` FOREIGN KEY (`carReg`) REFERENCES `Cars` (`regPlate`) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Fines (

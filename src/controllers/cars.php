@@ -11,4 +11,6 @@
 		$car->changeReg($_POST['newReg']);
 	} elseif (isset($_POST['newSetting'])) {
 		$car->changeSetting($_POST['newSetting'], $car->setting);
+	} elseif (isset($_POST['deleteCar'])) {
+		$car->deleteCar();
 	}
