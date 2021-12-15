@@ -3,7 +3,7 @@ body, html {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	font: 16px arial;
+	/* font: 16px arial; */
 }
 
 .header {
@@ -11,15 +11,23 @@ body, html {
 	padding: 5px;
 }
 
-h1, h2, h3 {
-    text-align: center;
-}
-
 .nav__item {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 15px 25px;
 	margin: 2px;
-	cursor: pointer;
-	text-decoration: none;
+	/* cursor: pointer; */
+	/* text-decoration: none; */
+}
+
+h1, h2, h3 {
+	text-align: center;
+}
+
+p {
+	font-weight: bolder;
+}
+
+hr.dashed {
+	border-style: dashed;
 }

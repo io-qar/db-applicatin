@@ -8,6 +8,7 @@
 	echo '<hr>';
 	$camera->output('o');
 	if (isset($_POST['newAddr'])) {
-		// $camera->output('o');
 		$camera->changeAddress($_POST['newAddr'], $camera->id);
+	} elseif (isset($_POST['newSetting'])) {
+		$camera->changeSetting($_POST['newSetting'], $camera->id);
 	}

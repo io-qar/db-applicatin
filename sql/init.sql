@@ -48,7 +48,9 @@ CREATE TABLE IF NOT EXISTS cameraproject.Vehicle_owners (
   name varchar(20) NOT NULL,
   carReg varchar(11) NOT NULL,
   KEY carReg (carReg),
-  CONSTRAINT vehicleowner_ibfk_1 FOREIGN KEY (carReg) REFERENCES Cars (regPlate)
+--   CONSTRAINT vehicleowner_ibfk_1 FOREIGN KEY (carReg) REFERENCES Cars (regPlate)
+  ADD CONSTRAINT Vehicle_owners_FK FOREIGN KEY (carReg) REFERENCES Cars(regPlate);
+
 );
 
 CREATE TABLE IF NOT EXISTS cameraproject.Fines (
