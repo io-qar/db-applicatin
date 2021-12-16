@@ -48,6 +48,22 @@
 			}
 		}
 
+		function addCam($address, $setting) {
+			global $mysqli;
+
+			$result = $mysqli->query("INSERT Cameras (address, setting) VALUES ('$address', '$setting')");
+
+			if ($result) {
+				$this->setAddr($address);
+				$this->setSetting($setting);
+				echo "Вы успешно добавили новую камеру по адресу '$this->address' с настройкой на '$this->setting'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
+			} else {
+				exit("Извините, не удалось добавить камеру!");
+			}
+		
+		}
+
 		function changeAddress($newAddr, $id) {
 			global $mysqli;
 			$result = $mysqli->query("UPDATE Cameras SET address = '$newAddr' WHERE cameraId = $id");
@@ -72,6 +88,18 @@
 				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
 			} else {
 				exit("Извините, не удалось сменить настройку на '$newSetting'!");
+			}
+		}
+
+		function deleteCamera() {
+			global $mysqli;
+			$result = $mysqli->query("DELETE FROM Cameras WHERE cameraId = '$this->id'");
+
+			if ($result) {
+				echo "Информация о камере была успешно удалена! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
+			} else {
+				exit("Извините, не удалось удалить информация о камере");
 			}
 		}
 	}

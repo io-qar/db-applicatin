@@ -22,5 +22,8 @@
 	</datalist>
 	<button type="submit">Поменять настройку</button>
 </form>
+<form action="" method="post">
+	<button type="submit" name="deleteCamera">Удалить камеру</button>
+</form>
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';

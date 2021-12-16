@@ -43,8 +43,29 @@
 						echo "<td>".$this->model."</td>";
 						echo "<td>".$this->owner."</td>";
 						echo "</table>";
-					} else echo 'Выберите транспортное средстово';
+					} else echo 'Выберите транспортное средство';
 					break;	
+			}
+		}
+
+		function addCar($reg, $model) {
+			global $mysqli;
+			$check = $mysqli->query("SELECT regPlate FROM Cars WHERE regPlate = '$reg'");
+			$myrow = $check->fetch_array();
+
+			if (!empty($myrow['regPlate'])) {
+				exit("Извините, введённый вами регистрационный номер уже зарегистрирован. Введите другой регистрационный номер.");
+			}
+
+			$result = $mysqli->query("INSERT Cars (regPlate, model) VALUES ('$reg', '$model')");
+
+			if ($result) {
+				$this->setReg($reg);
+				$this->setModel($model);
+				echo "Вы успешно добавили ТС '$this->reg', модель '$this->model'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
+			} else {
+				exit("Извините, не удалось добавить ТС с номером '$reg'!");
 			}
 		}
 
@@ -52,7 +73,6 @@
 			global $mysqli;
 			$check = $mysqli->query("SELECT regPlate FROM Cars WHERE '$newReg' = '$this->reg'");
 			$myrow = $check->fetch_array();
-			echo json_encode($myrow);
 
 			if (!empty($myrow['regPlate'])) {
 				exit("Извините, введённый вами регистрационный номер уже зарегистрирован. Введите другой регистрационный номер.");
@@ -87,11 +107,10 @@
 			$result = $mysqli->query("DELETE FROM Cars WHERE regPlate = '$this->reg'");
 
 			if ($result) {
-				// $this->setModel($newModel);
 				echo "Информация о ТС была успешно удалена! Обновление страницы...";
 				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
 			} else {
-				exit("Извините, не удалось удалить информация о ТС");
+				exit("Извините, не удалось удалить информацию о ТС");
 			}
 		}
 	}
