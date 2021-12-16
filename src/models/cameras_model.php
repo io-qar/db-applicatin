@@ -1,4 +1,17 @@
 <?php
+
+	function sort_link_th($title, $a, $b) {
+		$sort = @$_GET['sort'];
+	
+		if ($sort == $a) {
+			return '<a class="active" href="?sort='.$b.'">'.$title.' ▲</a>';
+		} elseif ($sort == $b) {
+			return '<a class="active" href="?sort='.$a.'">'.$title.' ▼</a>';  
+		} else {
+			return '<a href="?sort='.$a.'">'.$title.'</a>';  
+		}
+	}
+
 	class Camera {
 		function setId($id) {
 			$this->id = $id;
@@ -12,15 +25,35 @@
 			$this->setting = $setting;
 		}
 
-		function output($flag) {
+		function output($flag, $sort_sql) {
 			global $mysqli;
+
+			$sort_list = array(
+				'cameraId_asc'   => '`cameraId`',
+				'cameraId_desc'  => '`cameraId` DESC',
+				'address_asc'  => '`address`',
+				'address_desc' => '`address` DESC',
+				'setting_asc'   => '`setting`',
+				'setting_desc'  => '`setting` DESC'  
+			);
+
+			$sort = @$_GET['sort'];
+			if (array_key_exists($sort, $sort_list)) {
+				$sort_sql = $sort_list[$sort];
+			} else {
+				$sort_sql = reset($sort_list);
+			}
+
 			switch ($flag) {
 				case 'a':
-					$db_strings = $mysqli->query("SELECT * FROM Cameras");
-					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);	
+					$db_strings = $mysqli->query("SELECT * FROM Cameras ORDER BY $sort_sql");
+					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					
 					echo '<table>';
-					echo '<tr><th>ID камеры</th><th>Адрес камеры</th><th>Настройка камеры</th></tr>';
+					echo "<tr><th>"; echo sort_link_th('ID камеры', 'cameraId_asc', 'cameraId_desc'); echo "</th>";
+							echo "<th>Адрес камеры</th>
+							<th>Настройка камеры</th>
+						</tr>";
 					foreach ($rows as $row) {
 						echo "<tr>";
 						echo "<td>".$row["cameraId"]."</td>";
