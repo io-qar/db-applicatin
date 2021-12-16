@@ -29,12 +29,12 @@
 
 			<p>Штрафы</p>
 			<ul>
-				<li><a href=''>Полный список штрафов</a></li>
+				<li><a href='/views/fines_view.php'>Полный список штрафов</a></li>
 			</ul>
 
-			<p>Пользователи</p>
+			<p>Файлы</p>
 			<ul>
-				<li><a href=''>Полный список пользователtq</a></li>
+				<li><a href='/views/files_view.php'>Полный список файлов</a></li>
 			</ul>
 		";
 	} else {

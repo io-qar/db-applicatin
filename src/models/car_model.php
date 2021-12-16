@@ -25,7 +25,7 @@
 						echo "<tr>";
 						echo "<td>".$row["regPlate"]."</td>";
 						echo "<td>".$row["model"]."</td>";
-						echo "<td><a href=''>".$row["ownerId"]."</a></td>";
+						echo "<td>".$row["ownerId"]."</td>";
 						echo "<td><a href='/settings/car_setting.php?regPlate=".$row['regPlate']."&model=".$row['model']."&ownerId=".$row['ownerId']."'>Настроить</a></td>";
 						echo "</tr>";
 					}

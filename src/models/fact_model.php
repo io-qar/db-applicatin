@@ -28,17 +28,20 @@
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					if (empty($rows)) {
 						echo "Похоже, фактов нарушений ещё нет!";
-						// break;
 					} else {
 						echo '<table>';
-						echo '<tr><th>ID факта</th><th>ID камеры</th><th>Ссылка на файл</th><th>Статус</th></tr>';
+						echo '<tr><th>ID факта</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
 						foreach ($rows as $row) {
 							echo "<tr>";
 							echo "<td>".$row["factId"]."</td>";
 							echo "<td>".$row["cameraId"]."</td>";
+							echo "<td>".$row["regPlate"]."</td>";
 							echo "<td>".$row["fileId"]."</td>";
 							echo "<td>".$row["status"]."</td>";
-							echo "<td><a href='/settings/camera_setting.php?factId=".$row['factId']."&cameraId=".$row['cameraId']."&fileId=".$row['fileId']."&status=".$row['status']."'>Настроить</a></td>";
+							echo "<td><a href='/settings/fact_setting.php?factId=".$row['factId']."&cameraId=".$row['cameraId']."&carReg=".$row['regPlate']."&fileId=".$row['fileId']."&status=".$row['status']."'>Настроить</a></td>";
+							if ($row['status'] == '1') {
+								echo "<td><a href='fines_view.php?cameraId=".$row['cameraId']."&userName=".$_SESSION['name']."&carReg=".$row['regPlate']."'>Выписать штраф</a></td>";
+							}
 							echo "</tr>";
 						}
 						echo "</table>";
@@ -48,13 +51,15 @@
 					if (isset($_GET["factId"])) {
 						$this->setId($_GET["factId"]);
 						$this->setCamId($_GET["cameraId"]);
+						$this->setCarReg($_GET["carReg"]);
 						$this->setFileId($_GET["fileId"]);
 						$this->setStatus($_GET["status"]);
 
 						echo '<table>';
-						echo '<tr><th>ID факта</th><th>ID камеры</th><th>Ссылка на файл</th><th>Статус</th></tr>';
+						echo '<tr><th>ID факта</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
 						echo "<td>".$this->id."</td>";
 						echo "<td>".$this->camId."</td>";
+						echo "<td>".$this->carReg."</td>";
 						echo "<td>".$this->fileId."</td>";
 						echo "<td>".$this->status."</td>";
 						echo "</table>";
@@ -68,30 +73,75 @@
 			$result = $mysqli->query("INSERT Facts (cameraId, regPlate, fileId) VALUES ('$camId', '$carReg', $fileId)");
 
 			if ($result) {
-				// $this->setId($camId);
 				$this->setCamId($camId);
 				$this->setCarReg($carReg);
-				// $this->setStatus(false)
-					$this->setFileId($fileId);
-					echo "Вы успешно добавили факт нарушения №'$this->id' ТС с номером '$this->carReg', который зафиксировала камера №'$this->camId'! Обновление страницы...";
-					echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+				$this->setFileId($fileId);
+				echo "Вы успешно добавили факт нарушения №'$this->id' ТС с номером '$this->carReg', который зафиксировала камера №'$this->camId'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
 			}
 		}
 
-		function showFact() {
-			echo '<p>Добавить факт</p>';
+		function changeReg($newReg) {
 			global $mysqli;
+			$result = $mysqli->query("UPDATE Facts SET regPlate = '$newReg' WHERE factId = '$this->id'");
 
-			$result = $mysqli->query("SELECT * FROM Cameras");
-			// $rows = $result->fetch_all(MYSQLI_ASSOC);
-			
-			
-				// foreach ($rows as $row) {
-	
-				// 	echo "<option value='".$row->cameraId."'>".$row->cameraId.", ".$row->address.", ".$row->setting."</option>";
-					
-				// }
-				while ($row = $result->fetch_object()) echo "<option value='".$row->cameraId."'>".$row->cameraId.", ".$row->address.", ".$row->setting."</option>"; 
-			
+			if ($result) {
+				$this->setCarReg($newReg);
+				echo "Вы успешно сменили номер ТС в факте на '$this->carReg'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+			} else {
+				exit("Извините, не удалось сменить номер ТС на '$newReg'!");
+			}
+		}
+
+		function changeCamId($newId) {
+			global $mysqli;
+			$result = $mysqli->query("UPDATE Facts SET cameraId = '$newId' WHERE factId = '$this->id'");
+
+			if ($result) {
+				$this->setCamId($newId);
+				echo "Вы успешно сменили номер камеры в факте на '$this->id'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+			} else {
+				exit("Извините, не удалось сменить номер ТС на '$newId'!");
+			}
+		}
+
+		function changeStatus($state) {
+			global $mysqli;
+			$result = $mysqli->query("UPDATE Facts SET status = '$state' WHERE factId = '$this->id'");
+
+			if ($result) {
+				$this->setStatus($state);
+				echo "Вы успешно сменили статус факта на '$this->status'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+			} else {
+				exit("Извините, не удалось сменить статуса на '$state'!");
+			}
+		}
+
+		function changeFileId($newFileId) {
+			global $mysqli;
+			$result = $mysqli->query("UPDATE Facts SET fileId = '$newFileId' WHERE factId = '$this->id'");
+
+			if ($result) {
+				$this->setFileId($newFileId);
+				echo "Вы успешно сменили номер файла на '$this->newFileId'! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+			} else {
+				exit("Извините, не удалось сменить номер файла на '$newFileId'!");
+			}
+		}
+
+		function deleteFact() {
+			global $mysqli;
+			$result = $mysqli->query("DELETE FROM Facts WHERE factId = '$this->id'");
+
+			if ($result) {
+				echo "Информация о факте была успешно удалена! Обновление страницы...";
+				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+			} else {
+				exit("Извините, не удалось удалить информацию о факте");
+			}
 		}
 	}

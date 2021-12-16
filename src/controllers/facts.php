@@ -7,8 +7,15 @@
 
 	echo '<hr>';
 	$fact->output('o');
-	// $fact->showFact();
 	
-	if (isset($_POST['addFactCam']) and isset($_POST['addFactCarReg'])) {
-		$fact->addFact($_POST['addFactCam'], $_POST['addFactCarReg'], 1);
+	if (isset($_POST['addFactCam']) and isset($_POST['addFactCarReg']) and isset($_POST['addFactFile'])) {
+		$fact->addFact($_POST['addFactCam'], $_POST['addFactCarReg'], $_POST['addFactFile']);
+	} elseif (isset($_POST['newCamId'])) {
+		$fact->changeCamId($_POST['newCamId']);
+	} elseif (isset($_POST['newReg'])) {
+		$fact->changeReg($_POST['newReg']);
+	} elseif (isset($_POST['newStatus'])) {
+		$fact->changeStatus($_POST['newStatus']);
+	} elseif (isset($_POST['deleteFact'])) {
+		$fact->deleteFact();
 	}
