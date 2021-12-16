@@ -2,6 +2,8 @@
 	<head>
 		<title><?php echo $title_name; ?></title>
 		<link rel="stylesheet" href="/styles/main.css">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+		<script src="/scripts/datalist.js"></script>
 		<meta charset="utf-8">
 		<?php session_start(); ?>
 	</head>

@@ -16,9 +16,9 @@
 	<label>Новая настройка:</label>
 	<input list="newSetting" name="newSetting" required>
 	<datalist id="newSetting">
-		<option value="line"/>
-		<option value="speed"/>
-		<option value="sign"/>
+		<option value="line">Камера на разметку</option>
+		<option value="speed">Камера на скорость</option>
+		<option value="sign">Камера на знак</option>
 	</datalist>
 	<button type="submit">Поменять настройку</button>
 </form>

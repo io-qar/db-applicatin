@@ -10,9 +10,9 @@
 	<input name="newCamAddr" type="text" placeholder="Адрес" required>
 	<input name="newCamSetting" list="newCamSetting" required>
 	<datalist id="newCamSetting">
-		<option value="line"/>
-		<option value="speed"/>
-		<option value="sign"/>
+		<option value="line">Камера на разметку</option>
+		<option value="speed">Камера на скорость</option>
+		<option value="sign">Камера на знак</option>
 	</datalist>
 	<button type="submit">Добавить камеру</button>
 </form>
