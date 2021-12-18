@@ -2,8 +2,10 @@
 	$title_name = 'Камеры';
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/controllers/cameras.php';
-?>
-<hr class="dashed">
+
+	if ($_SESSION['prv'] == 'admin') {
+		echo '
+		<hr class="dashed">
 <p>Добавить камеру</p>
 <form action="" method="post">
 	<label>Адрес расположения камеры и настройка:</label>
@@ -16,5 +18,9 @@
 	</datalist>
 	<button type="submit">Добавить камеру</button>
 </form>
+		';
+	}
+?>
+
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';

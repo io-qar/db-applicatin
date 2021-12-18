@@ -50,17 +50,39 @@
 			}
 		}
 		
-		function output($flag) {
+		function output($flag, $sort_sql) {
 			global $mysqli;
+
+			$sort_list = array(
+				'fineId_asc'   => '`fineId`',
+				'fineId_desc'  => '`fineId` DESC',
+				'datetime_asc'  => '`datetime`',
+				'datetime_desc' => '`datetime` DESC',
+				'userId_asc'   => '`userId`',
+				'userId_desc'  => '`userId` DESC',
+				'ownerId_asc'  => '`ownerId`',
+				'ownerId_desc' => '`ownerId` DESC',
+				'cameraId_asc'  => '`cameraId`',
+				'cameraId_desc' => '`cameraId` DESC'
+			);
+
+			$sort = @$_GET['sort'];
+			if (array_key_exists($sort, $sort_list)) {
+				$sort_sql = $sort_list[$sort];
+			} else {
+				$sort_sql = reset($sort_list);
+			}
+
 			switch ($flag) {
 				case 'a':
-					$db_strings = $mysqli->query("SELECT * FROM Fines");
+					$db_strings = $mysqli->query("SELECT * FROM Fines ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					if (empty($rows)) {
 						echo "Похоже, штрафов ещё нет!";
 					} else {
 						echo '<table>';
-						echo '<tr><th>ID штрафа</th><th>Время выписки</th><th>Номер юзера</th><th>Паспорт водителя</th><th>Номер камеры</th></tr>';
+						echo '<tr><th>';
+						echo sort_link_th('ID штрафа', 'fineId_asc', 'fineId_desc'); echo '</th><th>Время выписки</th><th>Номер юзера</th><th>Паспорт водителя</th><th>Номер камеры</th></tr>';
 						foreach ($rows as $row) {
 							echo "<tr>";
 							echo "<td>".$row["fineId"]."</td>";

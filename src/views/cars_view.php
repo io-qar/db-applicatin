@@ -2,6 +2,7 @@
 	$title_name = 'Транспортные средства';
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/controllers/cars.php';
+	// include $_SERVER['DOCUMENT_ROOT'].'/controllers/owners.php';
 ?>
 <hr class="dashed">
 <p>Добавить ТС</p>
@@ -11,5 +12,15 @@
 	<input name="newCarModel" type="text" placeholder="Лада Гранта" required>
 	<button type="submit">Добавить ТС</button>
 </form>
+
+<details>
+	<summary>Показать связанные таблицы</summary>
+	<!-- <p>...</p> -->
+	<?php
+	// $owner = new Owner();
+	// $owner->output('a', 'asc');
+	include $_SERVER['DOCUMENT_ROOT'].'/controllers/owners.php';
+	?>
+</details>
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';

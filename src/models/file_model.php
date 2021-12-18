@@ -8,22 +8,41 @@
 			$this->link = $link;
 		}
 
-		function output($flag) {
+		function output($flag, $sort_sql) {
 			global $mysqli;
+
+			$sort_list = array(
+				'fileId_asc'   => '`fileId`',
+				'fileId_desc'  => '`fileId` DESC',
+				'fileLink_asc'  => '`fileLink`',
+				'fileLink_desc' => '`fileLink` DESC'
+			);
+
+			$sort = @$_GET['sort'];
+			if (array_key_exists($sort, $sort_list)) {
+				$sort_sql = $sort_list[$sort];
+			} else {
+				$sort_sql = reset($sort_list);
+			}
+
 			switch ($flag) {
 				case 'a':
-					$db_strings = $mysqli->query("SELECT * FROM Files");
+					$db_strings = $mysqli->query("SELECT * FROM Files ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					if (empty($rows)) {
 						echo "Похоже, файлов ещё нет!";
 					} else {
 						echo '<table>';
-						echo '<tr><th>ID файла</th><th>Ссылка</th></tr>';
+						echo '<tr><th>';
+						echo sort_link_th('ID файла', 'fileId_asc', 'fileId_desc'); echo '</th><th>Ссылка</th></tr>';
 						foreach ($rows as $row) {
 							echo "<tr>";
 							echo "<td>".$row["fileId"]."</td>";
 							echo "<td>".$row["fileLink"]."</td>";
-							echo "<td><a href='/settings/file_setting.php?fileId=".$row['fileId']."&fileLink=".$row['fileLink']."'>Настроить</a></td>";
+							if ($_SESSION['prv'] == 'admin') {
+								echo "<td><a href='/settings/file_setting.php?fileId=".$row['fileId']."&fileLink=".$row['fileLink']."'>Настроить</a></td>";
+							}
+							
 							echo "</tr>";
 						}
 						echo "</table>";

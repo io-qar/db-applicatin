@@ -2,10 +2,21 @@
 	<head>
 		<title><?php echo $title_name; ?></title>
 		<link rel="stylesheet" href="/styles/main.css">
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
-		<script src="/scripts/datalist.js"></script>
 		<meta charset="utf-8">
-		<?php session_start(); ?>
+		<?php
+			session_start();
+			function sort_link_th($title, $a, $b) {
+				$sort = @$_GET['sort'];
+			
+				if ($sort == $a) {
+					return '<a class="active" href="?sort='.$b.'">'.$title.' ▲</a>';
+				} elseif ($sort == $b) {
+					return '<a class="active" href="?sort='.$a.'">'.$title.' ▼</a>';  
+				} else {
+					return '<a href="?sort='.$a.'">'.$title.'</a>';  
+				}
+			}
+		?>
 	</head>
 	<body>
 		<header class="header">

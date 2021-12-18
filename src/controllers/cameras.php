@@ -3,10 +3,10 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/models/cameras_model.php';
 	
 	$camera = new Camera();
-	$camera->output('a', 'desc');
+	$camera->output('a', 'asc');
 
 	echo '<hr>';
-	// $camera->output('o');
+	$camera->output('o', '');
 	if (isset($_POST['newCamAddr']) and isset($_POST['newCamSetting'])) {
 		$camera->addCam($_POST['newCamAddr'], $_POST['newCamSetting']);
 	}

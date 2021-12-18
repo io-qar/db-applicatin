@@ -1,4 +1,5 @@
 <?php
+
 	class Car {
 		function setReg($reg) {
 			$this->reg = $reg;
@@ -12,21 +13,42 @@
 			$this->owner = $owner;
 		}
 
-		function output($flag) {
+		function output($flag, $sort_sql) {
 			global $mysqli;
+
+			$sort_list = array(
+				'regPlate_asc'   => '`regPlate`',
+				'regPlate_desc'  => '`regPlate` DESC',
+				'model_asc'  => '`model`',
+				'model_desc' => '`model` DESC',
+				'ownerId_asc'   => '`ownerId`',
+				'ownerId_desc'  => '`ownerId` DESC'  
+			);
+
+			$sort = @$_GET['sort'];
+			if (array_key_exists($sort, $sort_list)) {
+				$sort_sql = $sort_list[$sort];
+			} else {
+				$sort_sql = reset($sort_list);
+			}
+
 			switch ($flag) {
 				case 'a':
-					$db_strings = $mysqli->query("SELECT * FROM Cars");
+					$db_strings = $mysqli->query("SELECT * FROM Cars ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);	
 					
 					echo '<table>';
-					echo '<tr><th>Регистрационный номер ТС</th><th>Модель</th><th>Владелец</th></tr>';
+					echo '<tr><th>'; echo sort_link_th('Регистрационный номер ТС', 'regPlate_asc', 'regPlate_desc'); echo '</th><th>Модель</th></tr>';
 					foreach ($rows as $row) {
 						echo "<tr>";
 						echo "<td>".$row["regPlate"]."</td>";
 						echo "<td>".$row["model"]."</td>";
-						echo "<td>".$row["ownerId"]."</td>";
-						echo "<td><a href='/settings/car_setting.php?regPlate=".$row['regPlate']."&model=".$row['model']."&ownerId=".$row['ownerId']."'>Настроить</a></td>";
+						// echo "<td>".$row["ownerId"]."</td>";
+						if ($_SESSION['prv'] == 'admin') {
+							echo "
+							<td><a href='/settings/car_setting.php?regPlate=".$row['regPlate']."&model=".$row['model']."&ownerId=".$row['ownerId']."'>Настроить</a></td>";
+						}
+						
 						echo "</tr>";
 					}
 					echo "</table>";

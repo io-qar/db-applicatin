@@ -3,7 +3,7 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/models/file_model.php';
 	
 	$file = new File();
-	$file->output('a');
+	$file->output('a', 'asc');
 
 	echo '<hr>';
 	$file->output('o');

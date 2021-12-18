@@ -20,17 +20,39 @@
 			$this->status = $status;
 		}
 
-		function output($flag) {
+		function output($flag, $sort_sql) {
 			global $mysqli;
+
+			$sort_list = array(
+				'factId_asc'   => '`factId`',
+				'factId_desc'  => '`factId` DESC',
+				'cameraId_asc'  => '`cameraId`',
+				'cameraId_desc' => '`cameraId` DESC',
+				'regPlate_asc'   => '`regPlate`',
+				'regPlate_desc'  => '`regPlate` DESC',
+				'fileId_asc'   => '`fileId`',
+				'fileId_desc'  => '`fileId` DESC',
+				'status_asc'  => '`status`',
+				'status_desc' => '`status` DESC',
+			);
+
+			$sort = @$_GET['sort'];
+			if (array_key_exists($sort, $sort_list)) {
+				$sort_sql = $sort_list[$sort];
+			} else {
+				$sort_sql = reset($sort_list);
+			}
+
 			switch ($flag) {
 				case 'a':
-					$db_strings = $mysqli->query("SELECT * FROM Facts");
+					$db_strings = $mysqli->query("SELECT * FROM Facts ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					if (empty($rows)) {
 						echo "Похоже, фактов нарушений ещё нет!";
 					} else {
 						echo '<table>';
-						echo '<tr><th>ID факта</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
+						echo '<tr><th>';
+						echo sort_link_th('ID факта', 'factId_asc', 'factId_desc'); echo '</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
 						foreach ($rows as $row) {
 							echo "<tr>";
 							echo "<td>".$row["factId"]."</td>";
@@ -38,10 +60,15 @@
 							echo "<td>".$row["regPlate"]."</td>";
 							echo "<td>".$row["fileId"]."</td>";
 							echo "<td>".$row["status"]."</td>";
-							echo "<td><a href='/settings/fact_setting.php?factId=".$row['factId']."&cameraId=".$row['cameraId']."&carReg=".$row['regPlate']."&fileId=".$row['fileId']."&status=".$row['status']."'>Настроить</a></td>";
+							if ($_SESSION['prv'] == 'admin') {
+								echo "<td><a href='/settings/fact_setting.php?factId=".$row['factId']."&cameraId=".$row['cameraId']."&carReg=".$row['regPlate']."&fileId=".$row['fileId']."&status=".$row['status']."'>Настроить</a></td>";
+								
+							}
 							if ($row['status'] == '1') {
 								echo "<td><a href='fines_view.php?cameraId=".$row['cameraId']."&userName=".$_SESSION['name']."&carReg=".$row['regPlate']."'>Выписать штраф</a></td>";
 							}
+							
+							
 							echo "</tr>";
 						}
 						echo "</table>";

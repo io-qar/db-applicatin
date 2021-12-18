@@ -4,7 +4,7 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 	echo '<h1>Добро пожаловать в систему учёта штрафов!</h1><br><h2>Войдите или зарегистрируйтесь, чтобы получить доступ к функциям учёта!</h2>';
-	if (isset($_SESSION['prv']) and $_SESSION['prv'] == 'admin') {
+	if (isset($_SESSION['prv'])) {
 		echo "
 			<h3>Вам доступны функции админа!</h3>
 			<p>Камеры</p>
@@ -37,9 +37,7 @@
 				<li><a href='/views/files_view.php'>Полный список файлов</a></li>
 			</ul>
 		";
-	} else {
-		echo "<h3>Фиксации нарушений:</h3>";
-		include $_SERVER['DOCUMENT_ROOT'].'/views/facts_view.php';
 	}
+	
 
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';

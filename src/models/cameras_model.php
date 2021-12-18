@@ -1,16 +1,16 @@
 <?php
 
-	function sort_link_th($title, $a, $b) {
-		$sort = @$_GET['sort'];
+	// function sort_link_th($title, $a, $b) {
+	// 	$sort = @$_GET['sort'];
 	
-		if ($sort == $a) {
-			return '<a class="active" href="?sort='.$b.'">'.$title.' ▲</a>';
-		} elseif ($sort == $b) {
-			return '<a class="active" href="?sort='.$a.'">'.$title.' ▼</a>';  
-		} else {
-			return '<a href="?sort='.$a.'">'.$title.'</a>';  
-		}
-	}
+	// 	if ($sort == $a) {
+	// 		return '<a class="active" href="?sort='.$b.'">'.$title.' ▲</a>';
+	// 	} elseif ($sort == $b) {
+	// 		return '<a class="active" href="?sort='.$a.'">'.$title.' ▼</a>';  
+	// 	} else {
+	// 		return '<a href="?sort='.$a.'">'.$title.'</a>';  
+	// 	}
+	// }
 
 	class Camera {
 		function setId($id) {
@@ -59,7 +59,10 @@
 						echo "<td>".$row["cameraId"]."</td>";
 						echo "<td>".$row["address"]."</td>";
 						echo "<td>".$row["setting"]."</td>";
-						echo "<td><a href='/settings/camera_setting.php?cameraId=".$row['cameraId']."&address=".$row['address']."&setting=".$row['setting']."'>Настроить</a></td>";
+						if ($_SESSION['prv'] == 'admin') {
+							echo "<td><a href='/settings/camera_setting.php?cameraId=".$row['cameraId']."&address=".$row['address']."&setting=".$row['setting']."'>Настроить</a></td>";
+						}
+						
 						echo "</tr>";
 					}
 					echo "</table>";

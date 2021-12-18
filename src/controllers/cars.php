@@ -3,10 +3,10 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/models/car_model.php';
 	
 	$car = new Car();
-	$car->output('a');
+	$car->output('a', 'asc');
 
 	echo '<hr>';
-	$car->output('o');
+	$car->output('o', '');
 	if (isset($_POST['newCarReg']) and isset($_POST['newCarModel'])) {
 		$car->addCar($_POST['newCarReg'], $_POST['newCarModel']);
 	}

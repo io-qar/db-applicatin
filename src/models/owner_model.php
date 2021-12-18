@@ -12,21 +12,41 @@
 			$this->carReg = $reg;
 		}
 
-		function output($flag) {
+		function output($flag, $sort_sql) {
 			global $mysqli;
+
+			$sort_list = array(
+				'cardId_asc'   => '`cardId`',
+				'cardId_desc'  => '`cardId` DESC',
+				'name_asc'  => '`name`',
+				'name_desc' => '`name` DESC',
+				'carReg_asc'   => '`carReg`',
+				'carReg_desc'  => '`carReg` DESC'
+			);
+
+			$sort = @$_GET['sort'];
+			if (array_key_exists($sort, $sort_list)) {
+				$sort_sql = $sort_list[$sort];
+			} else {
+				$sort_sql = reset($sort_list);
+			}
+
 			switch ($flag) {
 				case 'a':
-					$db_strings = $mysqli->query("SELECT * FROM Vehicle_owners");
+					$db_strings = $mysqli->query("SELECT * FROM Vehicle_owners ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);	
 					
 					echo '<table>';
-					echo '<tr><th>Паспорт</th><th>Имя</th><th>Номер ТС</th></tr>';
+					echo '<tr><th>';
+					echo sort_link_th('Паспорт', 'cardId_asc', 'cardId_desc'); echo '</th><th>Имя</th><th>Номер ТС</th></tr>';
 					foreach ($rows as $row) {
 						echo "<tr>";
 						echo "<td>".$row["cardId"]."</td>";
 						echo "<td>".$row["name"]."</td>";
-						echo "<td><a href=''>".$row["carReg"]."</a></td>";
+						echo "<td>".$row["carReg"]."</a></td>";
+						if ($_SESSION['prv'] == 'admin') {
 						echo "<td><a href='/settings/owner_setting.php?cardId=".$row['cardId']."&name=".$row['name']."&carReg=".$row['carReg']."'>Настроить</a></td>";
+					}
 						echo "</tr>";
 					}
 					echo "</table>";
@@ -104,18 +124,24 @@
 			}
 		}
 
-		function changeReg($newReg, $id) {
-			global $mysqli;
-			$result = $mysqli->query("UPDATE Cars SET ownerId = '$newName' WHERE cardId = '$id'");
+		// function changeReg($newReg, $id) {
+		// 	global $mysqli;
+		// 	$check = $mysqli->query("SELECT regPlate FROM Cars WHERE regPlate = '$newReg'");
+		// 	$myrow = $check->fetch_array();
 
-			if ($result) {
-				$this->setName($newName);
-				echo "Вы успешно сменили имя владельца на '$this->name'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/owners_view.php">');
-			} else {
-				exit("Извините, не удалось сменить настройку на '$newName'!");
-			}
-		}
+		// 	if (!empty($myrow['regPlate'])) exit("Извините, не удалось сменить модель на '$newReg'!");
+
+		// 	$result = $mysqli->query("UPDATE Cars SET regPlate = '$newReg' WHERE regPlate = $id");
+
+		// 	if ($result) {
+		// 		$this->setCar($newReg);
+		// 		echo "Вы успешно сменили номер ТС на '$this->carReg'! Обновление страницы...";
+		// 		echo('<meta http-equiv="refresh" content="1; url=/views/owners_view.php">');
+		// 	} else {
+		// 		exit("Извините, не удалось сменить настройку на '$carReg'!");
+		// 	}
+			
+		// }
 
 		function deleteOwner() {
 			global $mysqli;

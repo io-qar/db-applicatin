@@ -2,8 +2,10 @@
 	$title_name = 'Настройки камеры';
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/controllers/cameras.php';
-?>
-<hr class="dashed">
+
+	if ($_SESSION['prv'] == 'admin') {
+		echo '
+		<hr class="dashed">
 <p>Сменить адрес камеры</p>
 <form action="" method="post">
 	<label>Новый адрес:</label>
@@ -25,5 +27,10 @@
 <form action="" method="post">
 	<button type="submit" name="deleteCamera">Удалить камеру</button>
 </form>
+		';
+	}
+	
+?>
+
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';

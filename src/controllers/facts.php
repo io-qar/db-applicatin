@@ -3,10 +3,10 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/models/fact_model.php';
 	
 	$fact = new Fact();
-	$fact->output('a');
+	$fact->output('a', 'asc');
 
 	echo '<hr>';
-	$fact->output('o');
+	$fact->output('o', '');
 	
 	if (isset($_POST['addFactCam']) and isset($_POST['addFactCarReg']) and isset($_POST['addFactFile'])) {
 		$fact->addFact($_POST['addFactCam'], $_POST['addFactCarReg'], $_POST['addFactFile']);
