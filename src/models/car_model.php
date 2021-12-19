@@ -1,5 +1,4 @@
 <?php
-
 	class Car {
 		function setReg($reg) {
 			$this->reg = $reg;
@@ -17,20 +16,18 @@
 			global $mysqli;
 
 			$sort_list = array(
-				'regPlate_asc'   => '`regPlate`',
-				'regPlate_desc'  => '`regPlate` DESC',
-				'model_asc'  => '`model`',
+				'regPlate_asc' => '`regPlate`',
+				'regPlate_desc' => '`regPlate` DESC',
+				'model_asc' => '`model`',
 				'model_desc' => '`model` DESC',
-				'ownerId_asc'   => '`ownerId`',
-				'ownerId_desc'  => '`ownerId` DESC'  
+				'ownerId_asc' => '`ownerId`',
+				'ownerId_desc' => '`ownerId` DESC'
 			);
 
 			$sort = @$_GET['sort'];
 			if (array_key_exists($sort, $sort_list)) {
 				$sort_sql = $sort_list[$sort];
-			} else {
-				$sort_sql = reset($sort_list);
-			}
+			} else $sort_sql = reset($sort_list);
 
 			switch ($flag) {
 				case 'a':
@@ -43,12 +40,10 @@
 						echo "<tr>";
 						echo "<td>".$row["regPlate"]."</td>";
 						echo "<td>".$row["model"]."</td>";
-						// echo "<td>".$row["ownerId"]."</td>";
 						if ($_SESSION['prv'] == 'admin') {
 							echo "
 							<td><a href='/settings/car_setting.php?regPlate=".$row['regPlate']."&model=".$row['model']."&ownerId=".$row['ownerId']."'>Настроить</a></td>";
 						}
-						
 						echo "</tr>";
 					}
 					echo "</table>";
@@ -66,7 +61,7 @@
 						echo "<td>".$this->owner."</td>";
 						echo "</table>";
 					} else echo 'Выберите транспортное средство';
-					break;	
+					break;
 			}
 		}
 
@@ -80,15 +75,12 @@
 			}
 
 			$result = $mysqli->query("INSERT Cars (regPlate, model) VALUES ('$reg', '$model')");
-
 			if ($result) {
 				$this->setReg($reg);
 				$this->setModel($model);
-				echo "Вы успешно добавили ТС '$this->reg', модель '$this->model'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
-			} else {
-				exit("Извините, не удалось добавить ТС с номером '$reg'!");
-			}
+				echo "<br>Вы успешно добавили ТС '$this->reg', модель '$this->model'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cars_view.php">';
+			} else exit("Извините, не удалось добавить ТС с номером '$reg'!");
 		}
 
 		function changeReg($newReg) {
@@ -101,14 +93,11 @@
 			}
 
 			$result = $mysqli->query("UPDATE Cars SET regPlate = '$newReg' WHERE regPlate = '$this->reg'");
-
 			if ($result) {
 				$this->setReg($newReg);
-				echo "Вы успешно сменили модель на '$this->reg'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
-			} else {
-				exit("Извините, не удалось сменить настройку на '$newReg'!");
-			}
+				echo "<br>Вы успешно сменили модель на '$this->reg'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cars_view.php">';
+			} else exit("Извините, не удалось сменить настройку на '$newReg'!");
 		}
 
 		function changeModel($newModel, $reg) {
@@ -117,11 +106,9 @@
 
 			if ($result) {
 				$this->setModel($newModel);
-				echo "Вы успешно сменили модель на '$this->model'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
-			} else {
-				exit("Извините, не удалось сменить настройку на '$newModel'!");
-			}
+				echo "<br>Вы успешно сменили модель на '$this->model'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cars_view.php">';
+			} else exit("Извините, не удалось сменить настройку на '$newModel'!");
 		}
 
 		function deleteCar() {
@@ -129,10 +116,8 @@
 			$result = $mysqli->query("DELETE FROM Cars WHERE regPlate = '$this->reg'");
 
 			if ($result) {
-				echo "Информация о ТС была успешно удалена! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cars_view.php">');
-			} else {
-				exit("Извините, не удалось удалить информацию о ТС");
-			}
+				echo "<br>Информация о ТС была успешно удалена! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cars_view.php">';
+			} else exit("Извините, не удалось удалить информацию о ТС");
 		}
 	}

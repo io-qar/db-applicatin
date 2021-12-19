@@ -39,9 +39,6 @@
 	} else $result = $mysqli->query("INSERT INTO Db_users (name, password) VALUES ('$name', '$password')");
 
 	if ($result) {
-		echo "Вы успешно зарегистрированы! Перенапрвление на главную через 5 секунд";
-		header('Refresh: 5; url="../index.php"');
-	} else {
-		echo "Ошибка! Вы не зарегистрированы.";
-	}
-?>
+		echo "Вы успешно зарегистрированы! Перенапрвление на главную через 3 секунды";
+		header('Refresh: 3; url="../index.php"');
+	} else echo "Ошибка! Вы не зарегистрированы.";

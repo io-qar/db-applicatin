@@ -12,18 +12,16 @@
 			global $mysqli;
 
 			$sort_list = array(
-				'fileId_asc'   => '`fileId`',
-				'fileId_desc'  => '`fileId` DESC',
-				'fileLink_asc'  => '`fileLink`',
+				'fileId_asc' => '`fileId`',
+				'fileId_desc' => '`fileId` DESC',
+				'fileLink_asc' => '`fileLink`',
 				'fileLink_desc' => '`fileLink` DESC'
 			);
 
 			$sort = @$_GET['sort'];
 			if (array_key_exists($sort, $sort_list)) {
 				$sort_sql = $sort_list[$sort];
-			} else {
-				$sort_sql = reset($sort_list);
-			}
+			} else $sort_sql = reset($sort_list);
 
 			switch ($flag) {
 				case 'a':
@@ -42,7 +40,6 @@
 							if ($_SESSION['prv'] == 'admin') {
 								echo "<td><a href='/settings/file_setting.php?fileId=".$row['fileId']."&fileLink=".$row['fileLink']."'>Настроить</a></td>";
 							}
-							
 							echo "</tr>";
 						}
 						echo "</table>";
@@ -59,7 +56,7 @@
 						echo "<td>".$this->link."</td>";
 						echo "</table>";
 					} else echo 'Выберите файл';
-					break;	
+					break;
 			}
 		}
 
@@ -69,8 +66,8 @@
 
 			if ($result) {
 				$this->setLink($camId);
-				echo "Вы успешно добавили файл №'$this->id'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/files_view.php">');
+				echo "<br>Вы успешно добавили файл №'$this->id'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/files_view.php">';
 			}
 		}
 
@@ -80,8 +77,8 @@
 
 			if ($result) {
 				$this->setLink($newLink);
-				echo "Вы успешно сменили ссылку на '$this->newLink'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/files_view.php">');
+				echo "<br>Вы успешно сменили ссылку на '$this->newLink'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/files_view.php">';
 			}
 		}
 
@@ -90,8 +87,8 @@
 			$result = $mysqli->query("DELETE FROM Files WHERE factId = '$this->id'");
 
 			if ($result) {
-				echo "Информация о файле была успешно удалена! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/files_view.php">');
+				echo "<br>Информация о файле была успешно удалена! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/files_view.php">';
 			}
 		}
 	}

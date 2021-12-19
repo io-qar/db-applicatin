@@ -16,25 +16,23 @@
 			global $mysqli;
 
 			$sort_list = array(
-				'cardId_asc'   => '`cardId`',
-				'cardId_desc'  => '`cardId` DESC',
-				'name_asc'  => '`name`',
+				'cardId_asc' => '`cardId`',
+				'cardId_desc' => '`cardId` DESC',
+				'name_asc' => '`name`',
 				'name_desc' => '`name` DESC',
-				'carReg_asc'   => '`carReg`',
-				'carReg_desc'  => '`carReg` DESC'
+				'carReg_asc' => '`carReg`',
+				'carReg_desc' => '`carReg` DESC'
 			);
 
 			$sort = @$_GET['sort'];
 			if (array_key_exists($sort, $sort_list)) {
 				$sort_sql = $sort_list[$sort];
-			} else {
-				$sort_sql = reset($sort_list);
-			}
+			} else $sort_sql = reset($sort_list);
 
 			switch ($flag) {
 				case 'a':
 					$db_strings = $mysqli->query("SELECT * FROM Vehicle_owners ORDER BY $sort_sql");
-					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);	
+					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					
 					echo '<table>';
 					echo '<tr><th>';
@@ -45,8 +43,8 @@
 						echo "<td>".$row["name"]."</td>";
 						echo "<td>".$row["carReg"]."</a></td>";
 						if ($_SESSION['prv'] == 'admin') {
-						echo "<td><a href='/settings/owner_setting.php?cardId=".$row['cardId']."&name=".$row['name']."&carReg=".$row['carReg']."'>Настроить</a></td>";
-					}
+							echo "<td><a href='/settings/owner_setting.php?cardId=".$row['cardId']."&name=".$row['name']."&carReg=".$row['carReg']."'>Настроить</a></td>";
+						}
 						echo "</tr>";
 					}
 					echo "</table>";
@@ -64,7 +62,7 @@
 						echo "<td>".$this->carReg."</td>";
 						echo "</table>";
 					} else echo 'Выберите владельца ТС';
-					break;	
+					break;
 			}
 		}
 
@@ -85,17 +83,16 @@
 				$result1 = $mysqli->query("UPDATE Cars SET ownerId = $id where regPlate = '$carReg'");
 				if ($result1) {
 					$this->setCar($carReg);
-					echo "Вы успешно добавили владельца с именем '$this->name', номером папорта '$this->cardId', владеющим ТС с номером '$this->carReg'! Обновление страницы...";
-					echo('<meta http-equiv="refresh" content="1; url=/views/owners_view.php">');
+					echo "<br>Вы успешно добавили владельца с именем '$this->name', номером папорта '$this->cardId', владеющим ТС с номером '$this->carReg'! Обновление страницы...";
+					echo '<meta http-equiv="refresh" content="1; url=/views/owners_view.php">';
 				} else exit("Извините, не удалось добавить ТС с номером '$reg'!");
 			}
 		}
 
 		function changeCardid($newId) {
 			global $mysqli;
-			$check = $mysqli->query("SELECT cardId FROM Vehicle_owners WHERE '$newId' = '$this->cardId'");
+			$check = $mysqli->query("SELECT cardId FROM Vehicle_owners WHERE 'cardId' = '$newId'");
 			$myrow = $check->fetch_array();
-			// echo json_encode($myrow);	
 
 			if (!empty($myrow['cardId'])) {
 				exit("Извините, введённый вами номер паспорта уже зарегистрирован. Введите другой номер.");
@@ -104,11 +101,9 @@
 			$result = $mysqli->query("UPDATE Vehicle_owners SET cardId = '$newId' WHERE cardId = '$this->cardId'");
 			if ($result) {
 				$this->setId($newId);
-				echo "Вы успешно сменили номер паспорта на '$this->cardId'! Обновление страницы...";
+				echo "<br>Вы успешно сменили номер паспорта на '$this->cardId'! Обновление страницы...";
 				echo '<meta http-equiv="refresh" content="1; url=/views/owners_view.php">';
-			} else {
-				exit("Извините, не удалось сменить номер паспорта на '$newId'!");
-			}
+			} else exit("Извините, не удалось сменить номер паспорта на '$newId'!");
 		}
 
 		function changeName($newName, $id) {
@@ -117,11 +112,9 @@
 
 			if ($result) {
 				$this->setName($newName);
-				echo "Вы успешно сменили имя владельца на '$this->name'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/owners_view.php">');
-			} else {
-				exit("Извините, не удалось сменить настройку на '$newName'!");
-			}
+				echo "<br>Вы успешно сменили имя владельца на '$this->name'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/owners_view.php">';
+			} else exit("Извините, не удалось сменить настройку на '$newName'!");
 		}
 
 		// function changeReg($newReg, $id) {
@@ -149,9 +142,7 @@
 
 			if ($result) {
 				echo "Информация о владельце была успешно удалена! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/owners_view.php">');
-			} else {
-				exit("Извините, не удалось удалить информацию о владельце");
-			}
+				echo '<meta http-equiv="refresh" content="1; url=/views/owners_view.php">';
+			} else exit("Извините, не удалось удалить информацию о владельце");
 		}
 	}

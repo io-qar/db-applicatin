@@ -1,7 +1,7 @@
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/controllers/connect.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/models/fine_model.php';
-	// echo $_SERVER['HTTP_REFERER'];
+	
 	$fine = new Fine();
 	if ($_SERVER['HTTP_REFERER'] == 'http://localhost/views/facts_view.php') {
 		$userId = $fine->getUserId($_GET['userName']);

@@ -38,6 +38,5 @@
 			</ul>
 		";
 	}
-	
 
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';

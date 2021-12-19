@@ -4,7 +4,6 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/models/search_model.php';
 
 	$search = new Search();
-	// rowsCount = $search->getMaxCams();
 
 	if (isset($_POST['carSearch'])) {
 		$sql_output = $search->carSearch($_POST['carSearch']);
@@ -34,7 +33,6 @@
 	if (isset($_POST['ownerIdMin']) and isset($_POST['ownerIdMax']) and isset($_POST['ownerName'])) {
 		$sql_output = $search->ownerSearch($_POST['ownerIdMin'], $_POST['ownerIdMax'], $_POST['ownerName']);
 		$search->output($sql_output, 'own');
-
 	}
 	
 	if (isset($_POST['status']) and (isset($_POST['cameraId']) or isset($_POST['regPlate']))) {
@@ -55,4 +53,3 @@
 		$sql_output = $search->fineSearch($_POST['fineId1'], $_POST['fineId2'], $_POST['dtfilter'], $_POST['datetime'], $_POST['fineCameraId']);
 		$search->output($sql_output, 'fn');
 	}
-?>

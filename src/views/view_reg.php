@@ -15,10 +15,8 @@
 	<p>
 		<input name="admin" type="checkbox" value="admin">
 		<label>Cуперадмин<br></label>
-
 		<input type="submit" name="submit" value="Зарегистрироваться">
 	</p>
 </form>
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';
-?>

@@ -1,17 +1,4 @@
 <?php
-
-	// function sort_link_th($title, $a, $b) {
-	// 	$sort = @$_GET['sort'];
-	
-	// 	if ($sort == $a) {
-	// 		return '<a class="active" href="?sort='.$b.'">'.$title.' ▲</a>';
-	// 	} elseif ($sort == $b) {
-	// 		return '<a class="active" href="?sort='.$a.'">'.$title.' ▼</a>';  
-	// 	} else {
-	// 		return '<a href="?sort='.$a.'">'.$title.'</a>';  
-	// 	}
-	// }
-
 	class Camera {
 		function setId($id) {
 			$this->id = $id;
@@ -40,9 +27,7 @@
 			$sort = @$_GET['sort'];
 			if (array_key_exists($sort, $sort_list)) {
 				$sort_sql = $sort_list[$sort];
-			} else {
-				$sort_sql = reset($sort_list);
-			}
+			} else $sort_sql = reset($sort_list);
 
 			switch ($flag) {
 				case 'a':
@@ -62,7 +47,6 @@
 						if ($_SESSION['prv'] == 'admin') {
 							echo "<td><a href='/settings/camera_setting.php?cameraId=".$row['cameraId']."&address=".$row['address']."&setting=".$row['setting']."'>Настроить</a></td>";
 						}
-						
 						echo "</tr>";
 					}
 					echo "</table>";
@@ -80,7 +64,7 @@
 						echo "<td>".$this->setting."</td>";
 						echo "</table>";
 					} else echo 'Выберите камеру';
-					break;	
+					break;
 			}
 		}
 
@@ -92,12 +76,9 @@
 			if ($result) {
 				$this->setAddr($address);
 				$this->setSetting($setting);
-				echo "Вы успешно добавили новую камеру по адресу '$this->address' с настройкой на '$this->setting'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
-			} else {
-				exit("Извините, не удалось добавить камеру!");
-			}
-		
+				echo "<br>Вы успешно добавили новую камеру по адресу '$this->address' с настройкой на '$this->setting'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">';
+			} else exit("Извините, не удалось добавить камеру!");
 		}
 
 		function changeAddress($newAddr, $id) {
@@ -106,25 +87,20 @@
 
 			if ($result) {
 				$this->setAddr($newAddr);
-				echo "Вы успешно сменили адрес на '$this->address'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
-			} else {
-				exit("Извините, не удалось сменить адрес на '$newAddr'!");
-			}
+				echo "<br>Вы успешно сменили адрес на '$this->address'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">';
+			} else exit("Извините, не удалось сменить адрес на '$newAddr'!");
 		}
 
 		function changeSetting($newSetting, $id) {
 			global $mysqli;
-			// echo $newSetting;
 			$result = $mysqli->query("UPDATE Cameras SET setting = '$newSetting' WHERE cameraId = $id");
 
 			if ($result) {
 				$this->setSetting($newSetting);
-				echo "Вы успешно сменили настройку на '$this->setting'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
-			} else {
-				exit("Извините, не удалось сменить настройку на '$newSetting'!");
-			}
+				echo "<br>Вы успешно сменили настройку на '$this->setting'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">';
+			} else exit("Извините, не удалось сменить настройку на '$newSetting'!");
 		}
 
 		function deleteCamera() {
@@ -132,10 +108,8 @@
 			$result = $mysqli->query("DELETE FROM Cameras WHERE cameraId = '$this->id'");
 
 			if ($result) {
-				echo "Информация о камере была успешно удалена! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">');
-			} else {
-				exit("Извините, не удалось удалить информация о камере");
-			}
+				echo "<br>Информация о камере была успешно удалена! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/cameras_view.php">';
+			} else exit("Извините, не удалось удалить информация о камере");
 		}
 	}

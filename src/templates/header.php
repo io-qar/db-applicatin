@@ -2,6 +2,7 @@
 	<head>
 		<title><?php echo $title_name; ?></title>
 		<link rel="stylesheet" href="/styles/main.css">
+		<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 		<meta charset="utf-8">
 		<?php
 			session_start();
@@ -9,11 +10,11 @@
 				$sort = @$_GET['sort'];
 			
 				if ($sort == $a) {
-					return '<a class="active" href="?sort='.$b.'">'.$title.' ▲</a>';
+					return '<a class="active" href="?sort='.$b.'">'.$title.' 🔼</a>';
 				} elseif ($sort == $b) {
-					return '<a class="active" href="?sort='.$a.'">'.$title.' ▼</a>';  
+					return '<a class="active" href="?sort='.$a.'">'.$title.' 🔽</a>';
 				} else {
-					return '<a href="?sort='.$a.'">'.$title.'</a>';  
+					return '<a href="?sort='.$a.'">'.$title.'</a>';
 				}
 			}
 		?>
@@ -22,6 +23,7 @@
 		<header class="header">
 			<div class="header__content">
 				<nav class="navbar">
+					<div style="height: 30px; background: url(https://uguide.ru/js/script/girlianda_uguide_ru_1.gif) repeat-x 100%;"></div>
 					<?php
 						echo '<a href="/views/index.php" class="nav__item">Главная</a>';
 						if (isset($_SESSION['name'])) {	

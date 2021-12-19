@@ -26,9 +26,9 @@
 
 		function output($sql, $flag) {
 			global $mysqli;
-			echo $sql;
+			// echo $sql;
 			$db_strings = $mysqli->query($sql);
-			$rows = $db_strings->fetch_all(MYSQLI_ASSOC);	
+			$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 			
 			if (empty($rows)) echo 'Результаты по вашему запросу не найдены<hr>'; 
 			else {
@@ -104,7 +104,6 @@
 
 		function carSearch($param) {
 			$res_search = "SELECT * FROM Cars WHERE (regPlate = '$param') or (model like '%$param%')";
-			// echo $res_search;
 			return $res_search;
 		}
 

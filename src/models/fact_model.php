@@ -24,24 +24,22 @@
 			global $mysqli;
 
 			$sort_list = array(
-				'factId_asc'   => '`factId`',
-				'factId_desc'  => '`factId` DESC',
-				'cameraId_asc'  => '`cameraId`',
+				'factId_asc' => '`factId`',
+				'factId_desc' => '`factId` DESC',
+				'cameraId_asc' => '`cameraId`',
 				'cameraId_desc' => '`cameraId` DESC',
-				'regPlate_asc'   => '`regPlate`',
-				'regPlate_desc'  => '`regPlate` DESC',
-				'fileId_asc'   => '`fileId`',
-				'fileId_desc'  => '`fileId` DESC',
-				'status_asc'  => '`status`',
-				'status_desc' => '`status` DESC',
+				'regPlate_asc' => '`regPlate`',
+				'regPlate_desc' => '`regPlate` DESC',
+				'fileId_asc' => '`fileId`',
+				'fileId_desc' => '`fileId` DESC',
+				'status_asc' => '`status`',
+				'status_desc' => '`status` DESC'
 			);
 
 			$sort = @$_GET['sort'];
 			if (array_key_exists($sort, $sort_list)) {
 				$sort_sql = $sort_list[$sort];
-			} else {
-				$sort_sql = reset($sort_list);
-			}
+			} else $sort_sql = reset($sort_list);
 
 			switch ($flag) {
 				case 'a':
@@ -60,15 +58,13 @@
 							echo "<td>".$row["regPlate"]."</td>";
 							echo "<td>".$row["fileId"]."</td>";
 							echo "<td>".$row["status"]."</td>";
+
 							if ($_SESSION['prv'] == 'admin') {
 								echo "<td><a href='/settings/fact_setting.php?factId=".$row['factId']."&cameraId=".$row['cameraId']."&carReg=".$row['regPlate']."&fileId=".$row['fileId']."&status=".$row['status']."'>Настроить</a></td>";
-								
 							}
 							if ($row['status'] == '1') {
 								echo "<td><a href='fines_view.php?cameraId=".$row['cameraId']."&userName=".$_SESSION['name']."&carReg=".$row['regPlate']."'>Выписать штраф</a></td>";
 							}
-							
-							
 							echo "</tr>";
 						}
 						echo "</table>";
@@ -91,7 +87,7 @@
 						echo "<td>".$this->status."</td>";
 						echo "</table>";
 					} else echo 'Выберите факт';
-					break;	
+					break;
 			}
 		}
 
@@ -103,8 +99,8 @@
 				$this->setCamId($camId);
 				$this->setCarReg($carReg);
 				$this->setFileId($fileId);
-				echo "Вы успешно добавили факт нарушения №'$this->id' ТС с номером '$this->carReg', который зафиксировала камера №'$this->camId'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
+				echo "<br>Вы успешно добавили факт нарушения №'$this->id' ТС с номером '$this->carReg', который зафиксировала камера №'$this->camId'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/facts_view.php">';
 			}
 		}
 
@@ -114,11 +110,9 @@
 
 			if ($result) {
 				$this->setCarReg($newReg);
-				echo "Вы успешно сменили номер ТС в факте на '$this->carReg'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
-			} else {
-				exit("Извините, не удалось сменить номер ТС на '$newReg'!");
-			}
+				echo "<br>Вы успешно сменили номер ТС в факте на '$this->carReg'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/facts_view.php">';
+			} else exit("Извините, не удалось сменить номер ТС на '$newReg'!");
 		}
 
 		function changeCamId($newId) {
@@ -127,11 +121,9 @@
 
 			if ($result) {
 				$this->setCamId($newId);
-				echo "Вы успешно сменили номер камеры в факте на '$this->id'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
-			} else {
-				exit("Извините, не удалось сменить номер ТС на '$newId'!");
-			}
+				echo "<br>Вы успешно сменили номер камеры в факте на '$this->id'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/facts_view.php">';
+			} else exit("Извините, не удалось сменить номер ТС на '$newId'!");
 		}
 
 		function changeStatus($state) {
@@ -140,11 +132,9 @@
 
 			if ($result) {
 				$this->setStatus($state);
-				echo "Вы успешно сменили статус факта на '$this->status'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
-			} else {
-				exit("Извините, не удалось сменить статуса на '$state'!");
-			}
+				echo "<br>Вы успешно сменили статус факта на '$this->status'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/facts_view.php">';
+			} else exit("Извините, не удалось сменить статус на '$state'!");
 		}
 
 		function changeFileId($newFileId) {
@@ -153,11 +143,9 @@
 
 			if ($result) {
 				$this->setFileId($newFileId);
-				echo "Вы успешно сменили номер файла на '$this->newFileId'! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
-			} else {
-				exit("Извините, не удалось сменить номер файла на '$newFileId'!");
-			}
+				echo "<br>Вы успешно сменили номер файла на '$this->newFileId'! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/facts_view.php">';
+			} else exit("Извините, не удалось сменить номер файла на '$newFileId'!");
 		}
 
 		function deleteFact() {
@@ -165,10 +153,8 @@
 			$result = $mysqli->query("DELETE FROM Facts WHERE factId = '$this->id'");
 
 			if ($result) {
-				echo "Информация о факте была успешно удалена! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/facts_view.php">');
-			} else {
-				exit("Извините, не удалось удалить информацию о факте");
-			}
+				echo "<br>Информация о факте была успешно удалена! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/facts_view.php">';
+			} else exit("Извините, не удалось удалить информацию о факте");
 		}
 	}

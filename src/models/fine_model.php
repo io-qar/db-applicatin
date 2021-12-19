@@ -54,24 +54,22 @@
 			global $mysqli;
 
 			$sort_list = array(
-				'fineId_asc'   => '`fineId`',
-				'fineId_desc'  => '`fineId` DESC',
-				'datetime_asc'  => '`datetime`',
+				'fineId_asc' => '`fineId`',
+				'fineId_desc' => '`fineId` DESC',
+				'datetime_asc' => '`datetime`',
 				'datetime_desc' => '`datetime` DESC',
-				'userId_asc'   => '`userId`',
-				'userId_desc'  => '`userId` DESC',
-				'ownerId_asc'  => '`ownerId`',
+				'userId_asc' => '`userId`',
+				'userId_desc' => '`userId` DESC',
+				'ownerId_asc' => '`ownerId`',
 				'ownerId_desc' => '`ownerId` DESC',
-				'cameraId_asc'  => '`cameraId`',
+				'cameraId_asc' => '`cameraId`',
 				'cameraId_desc' => '`cameraId` DESC'
 			);
 
 			$sort = @$_GET['sort'];
 			if (array_key_exists($sort, $sort_list)) {
 				$sort_sql = $sort_list[$sort];
-			} else {
-				$sort_sql = reset($sort_list);
-			}
+			} else $sort_sql = reset($sort_list);
 
 			switch ($flag) {
 				case 'a':
@@ -93,7 +91,6 @@
 							if ($_SESSION['prv'] == 'admin') {
 								echo "<td><a href='/settings/fine_setting.php?fineId=".$row['fineId']."&datetime=".$row['datetime']."&userId=".$row['userId']."&ownerId=".$row['ownerId']."&cameraId=".$row['cameraId']."'>Настроить</a></td>";
 							}
-							
 							echo "</tr>";
 						}
 						echo "</table>";
@@ -116,7 +113,7 @@
 						echo "<td>".$this->camId."</td>";
 						echo "</table>";
 					} else echo 'Выберите факт';
-					break;	
+					break;
 			}
 		}
 
@@ -129,8 +126,8 @@
 				$this->setUserId($userId);
 				$this->setOwnerId($ownerId);
 				$this->setCamId($cameraId);
-				echo "Вы успешно добавили штраф! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/fines_view.php">');
+				echo "<br>Вы успешно добавили штраф! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/fines_view.php">';
 			}
 		}
 
@@ -139,10 +136,8 @@
 			$result = $mysqli->query("DELETE FROM Fines WHERE fineId = '$this->id'");
 
 			if ($result) {
-				echo "Информация о штрафе была успешно удалена! Обновление страницы...";
-				echo('<meta http-equiv="refresh" content="1; url=/views/fines_view.php">');
-			} else {
-				exit("Извините, не удалось удалить информацию о факте");
-			}
+				echo "<br>Информация о штрафе была успешно удалена! Обновление страницы...";
+				echo '<meta http-equiv="refresh" content="1; url=/views/fines_view.php">';
+			} else exit("Извините, не удалось удалить информацию о факте");
 		}
 	}

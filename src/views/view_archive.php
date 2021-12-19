@@ -15,7 +15,7 @@
 	<input type="text" name="address">
 	<input type="submit">
 </form>
-<form> <!-- не работает -->
+<!-- <form>
 	<label>Вывести список камер по ID с</label>
 	<input type="text" name="minId1" placeholder="Введите номер камеры" required>
 	<label>по</label>
@@ -28,7 +28,7 @@
 		<option value="sign">Знак</option>
 	</datalist>
 	<input type="submit">
-</form>
+</form> -->
 <hr class="dashed">
 
 <h3>Фильтр ТС</h3>
@@ -56,7 +56,7 @@
 </form>
 <hr class="dashed">
 
-<h3>Фильтр фактов</h3> <!-- не работает -->
+<!-- <h3>Фильтр фактов</h3>
 <form action="" method="post">
 	<label>Вывести все факты</label><br>
 	<input type="radio" name="status" value="1">Утверждённые</input><br>
@@ -66,7 +66,7 @@
 	<label>или номер ТС</label>
 	<input type="text" name="regPlate">
 	<input type="submit">
-</form>
+</form> -->
 <hr class="dashed">
 
 <h3>Фильтр штрафов</h3>
@@ -89,4 +89,3 @@
 
 <?php
 	include $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';
-?>
