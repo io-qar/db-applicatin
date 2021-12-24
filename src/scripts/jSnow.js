@@ -30,11 +30,9 @@
 			zIndex: t
 		});
 		
-		if (fs) {
-			u.css('top', $("html").scrollTop() + 1 + "px");
-		} else {
-			u.css = '1px';
-		}
+		if (fs) u.css('top', $("html").scrollTop() + 1 + "px");
+		else u.css = '1px';
+
 		$("body").prepend(u).css({
 			height: "100%"
 		});
@@ -62,10 +60,10 @@
 		}
 		
 		function generateFlake(a, b) {
-			a = a || 1;
-			b = b || false;
-			var i = 0;
-			for (i = 0; i < a; i++) {
+			a ||= 1;
+			b ||= false;
+			// var i = 0;
+			for (var i = 0; i < a; i++) {
 				var c = $("<span \/>");
 				var d = o + Math.floor(Math.random() * p);
 				var e = m[Math.floor(Math.random() * m.length)];
