@@ -28,33 +28,31 @@
 					$db_strings = $mysqli->query("SELECT * FROM Files ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					if (empty($rows)) {
-						echo "Похоже, файлов ещё нет!";
+						echo 'Похоже, файлов ещё нет!';
 					} else {
-						echo '<table>';
-						echo '<tr><th>';
-						echo sort_link_th('ID файла', 'fileId_asc', 'fileId_desc'); echo '</th><th>Ссылка</th></tr>';
+						echo '<table><tr><th>';
+						echo sort_link_th('ID файла', 'fileId_asc', 'fileId_desc');
+						echo '</th><th>Ссылка</th></tr>';
 						foreach ($rows as $row) {
-							echo "<tr>";
-							echo "<td>".$row["fileId"]."</td>";
-							echo "<td>".$row["fileLink"]."</td>";
+							echo '<tr><td>'.$row['fileId'].'</td>';
+							echo '<td>'.$row['fileLink'].'</td>';
 							if ($_SESSION['prv'] == 'admin') {
 								echo "<td><a href='/settings/file_setting.php?fileId=".$row['fileId']."&fileLink=".$row['fileLink']."'>Настроить</a></td>";
 							}
-							echo "</tr>";
+							echo '</tr>';
 						}
-						echo "</table>";
+						echo '</table>';
 					}
 					break;
 				case 'o':
-					if (isset($_GET["fileId"])) {
-						$this->setId($_GET["fileId"]);
-						$this->setLink($_GET["fileLink"]);
+					if (isset($_GET['fileId'])) {
+						$this->setId($_GET['fileId']);
+						$this->setLink($_GET['fileLink']);
 
-						echo '<table>';
-						echo '<tr><th>ID файла</th><th>Ссылка</th></tr>';
-						echo "<td>".$this->id."</td>";
-						echo "<td>".$this->link."</td>";
-						echo "</table>";
+						echo '<table><tr><th>ID файла</th><th>Ссылка</th></tr>';
+						echo '<td>'.$this->id.'</td>';
+						echo '<td>'.$this->link.'</td>';
+						echo '</table>';
 					} else echo 'Выберите файл';
 					break;
 			}

@@ -26,7 +26,7 @@
 					<div style="height: 30px; background: url(https://uguide.ru/js/script/girlianda_uguide_ru_1.gif) repeat-x 100%;"></div>
 					<?php
 						echo '<a href="/views/index.php" class="nav__item">Главная</a>';
-						if (isset($_SESSION['name'])) {	
+						if (isset($_SESSION['name'])) {
 							echo '<a href="/views/view_archive.php" class="nav__item">Архив</a>';
 							echo '<a href="/controllers/logout.php" class="nav__item">Выйти из аккаунта</a>';
 							echo 'Вы зашли на сайт под именем '.$_SESSION["name"].' с типом доступа <b>'.$_SESSION['prv'].'</b>';

@@ -34,33 +34,30 @@
 					$db_strings = $mysqli->query("SELECT * FROM Vehicle_owners ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					
-					echo '<table>';
-					echo '<tr><th>';
-					echo sort_link_th('Паспорт', 'cardId_asc', 'cardId_desc'); echo '</th><th>Имя</th><th>Номер ТС</th></tr>';
+					echo '<table><tr><th>';
+					echo sort_link_th('Паспорт', 'cardId_asc', 'cardId_desc');
+					echo '</th><th>Имя</th><th>Номер ТС</th></tr>';
 					foreach ($rows as $row) {
-						echo "<tr>";
-						echo "<td>".$row["cardId"]."</td>";
-						echo "<td>".$row["name"]."</td>";
-						echo "<td>".$row["carReg"]."</a></td>";
+						echo '<tr><td>'.$row['cardId'].'</td>';
+						echo '<td>'.$row['name'].'</td>';
+						echo '<td>'.$row['carReg'].'</td>';
 						if ($_SESSION['prv'] == 'admin') {
 							echo "<td><a href='/settings/owner_setting.php?cardId=".$row['cardId']."&name=".$row['name']."&carReg=".$row['carReg']."'>Настроить</a></td>";
 						}
-						echo "</tr>";
+						echo '</tr>';
 					}
-					echo "</table>";
+					echo '</table>';
 					break;
 				case 'o':
-					if (isset($_GET["cardId"])) {
-						$this->setId($_GET["cardId"]);
-						$this->setName($_GET["name"]);
-						$this->setCar($_GET["carReg"]);
+					if (isset($_GET['cardId'])) {
+						$this->setId($_GET['cardId']);
+						$this->setName($_GET['name']);
+						$this->setCar($_GET['carReg']);
 
-						echo '<table>';
-						echo '<tr><th>Паспорт</th><th>Имя</th><th>Номер ТС</th></tr>';
-						echo "<td>".$this->cardId."</td>";
-						echo "<td>".$this->name."</td>";
-						echo "<td>".$this->carReg."</td>";
-						echo "</table>";
+						echo '<table><tr><th>Паспорт</th><th>Имя</th><th>Номер ТС</th></tr>';
+						echo '<td>'.$this->cardId.'</td>';
+						echo '<td>'.$this->name.'</td>';
+						echo '<td>'.$this->carReg.'</td></table>';
 					} else echo 'Выберите владельца ТС';
 					break;
 			}
@@ -72,7 +69,7 @@
 			$myrow = $check->fetch_array();
 
 			if (!empty($myrow['cardId'])) {
-				exit("Извините, введённый вами регистрационный номер уже зарегистрирован. Введите другой регистрационный номер.");
+				exit('Извините, введённый вами регистрационный номер уже зарегистрирован. Введите другой регистрационный номер.');
 			}
 
 			$result = $mysqli->query("INSERT Vehicle_owners (cardId, name, carReg) VALUES ('$id', '$name', '$carReg')");
@@ -95,7 +92,7 @@
 			$myrow = $check->fetch_array();
 
 			if (!empty($myrow['cardId'])) {
-				exit("Извините, введённый вами номер паспорта уже зарегистрирован. Введите другой номер.");
+				exit('Извините, введённый вами номер паспорта уже зарегистрирован. Введите другой номер.');
 			}
 
 			$result = $mysqli->query("UPDATE Vehicle_owners SET cardId = '$newId' WHERE cardId = '$this->cardId'");
@@ -141,8 +138,8 @@
 			$result = $mysqli->query("DELETE FROM Vehicle_owners WHERE cardId = '$this->cardId'");
 
 			if ($result) {
-				echo "Информация о владельце была успешно удалена! Обновление страницы...";
+				echo 'Информация о владельце была успешно удалена! Обновление страницы...';
 				echo '<meta http-equiv="refresh" content="1; url=/views/owners_view.php">';
-			} else exit("Извините, не удалось удалить информацию о владельце");
+			} else exit('Извините, не удалось удалить информацию о владельце');
 		}
 	}

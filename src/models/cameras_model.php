@@ -16,12 +16,12 @@
 			global $mysqli;
 
 			$sort_list = array(
-				'cameraId_asc'   => '`cameraId`',
-				'cameraId_desc'  => '`cameraId` DESC',
-				'address_asc'  => '`address`',
+				'cameraId_asc' => '`cameraId`',
+				'cameraId_desc' => '`cameraId` DESC',
+				'address_asc' => '`address`',
 				'address_desc' => '`address` DESC',
-				'setting_asc'   => '`setting`',
-				'setting_desc'  => '`setting` DESC'  
+				'setting_asc' => '`setting`',
+				'setting_desc' => '`setting` DESC'
 			);
 
 			$sort = @$_GET['sort'];
@@ -34,28 +34,25 @@
 					$db_strings = $mysqli->query("SELECT * FROM Cameras ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					
-					echo '<table>';
-					echo "<tr><th>"; echo sort_link_th('ID камеры', 'cameraId_asc', 'cameraId_desc'); echo "</th>";
-							echo "<th>Адрес камеры</th>
-							<th>Настройка камеры</th>
-						</tr>";
+					echo '<table><tr><th>';
+					echo sort_link_th('ID камеры', 'cameraId_asc', 'cameraId_desc');
+					echo '</th><th>Адрес камеры</th><th>Настройка камеры</th></tr>';
 					foreach ($rows as $row) {
-						echo "<tr>";
-						echo "<td>".$row["cameraId"]."</td>";
-						echo "<td>".$row["address"]."</td>";
-						echo "<td>".$row["setting"]."</td>";
+						echo '<tr><td>', $row['cameraId'], '</td>';
+						echo '<td>'.$row['address'].'</td>';
+						echo '<td>'.$row['setting'].'</td>';
 						if ($_SESSION['prv'] == 'admin') {
 							echo "<td><a href='/settings/camera_setting.php?cameraId=".$row['cameraId']."&address=".$row['address']."&setting=".$row['setting']."'>Настроить</a></td>";
 						}
-						echo "</tr>";
+						echo '</tr>';
 					}
-					echo "</table>";
+					echo '</table>';
 					break;
 				case 'o':
-					if (isset($_GET["cameraId"])) {
-						$this->setId($_GET["cameraId"]);
-						$this->setAddr($_GET["address"]);
-						$this->setSetting($_GET["setting"]);
+					if (isset($_GET['cameraId'])) {
+						$this->setId($_GET['cameraId']);
+						$this->setAddr($_GET['address']);
+						$this->setSetting($_GET['setting']);
 
 						echo '<table>';
 						echo '<tr><th>ID камеры</th><th>Адрес камеры</th><th>Настройка камеры</th></tr>';

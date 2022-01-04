@@ -46,18 +46,17 @@
 					$db_strings = $mysqli->query("SELECT * FROM Facts ORDER BY $sort_sql");
 					$rows = $db_strings->fetch_all(MYSQLI_ASSOC);
 					if (empty($rows)) {
-						echo "Похоже, фактов нарушений ещё нет!";
+						echo 'Похоже, фактов нарушений ещё нет!';
 					} else {
-						echo '<table>';
-						echo '<tr><th>';
-						echo sort_link_th('ID факта', 'factId_asc', 'factId_desc'); echo '</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
+						echo '<table><tr><th>';
+						echo sort_link_th('ID факта', 'factId_asc', 'factId_desc');
+						echo '</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
 						foreach ($rows as $row) {
-							echo "<tr>";
-							echo "<td>".$row["factId"]."</td>";
-							echo "<td>".$row["cameraId"]."</td>";
-							echo "<td>".$row["regPlate"]."</td>";
-							echo "<td>".$row["fileId"]."</td>";
-							echo "<td>".$row["status"]."</td>";
+							echo '<tr><td>'.$row['factId'].'</td>';
+							echo '<td>'.$row['cameraId'].'</td>';
+							echo '<td>'.$row['regPlate'].'</td>';
+							echo '<td>'.$row['fileId'].'</td>';
+							echo '<td>'.$row['status'].'</td>';
 
 							if ($_SESSION['prv'] == 'admin') {
 								echo "<td><a href='/settings/fact_setting.php?factId=".$row['factId']."&cameraId=".$row['cameraId']."&carReg=".$row['regPlate']."&fileId=".$row['fileId']."&status=".$row['status']."'>Настроить</a></td>";
@@ -65,27 +64,25 @@
 							if ($row['status'] == '1') {
 								echo "<td><a href='fines_view.php?cameraId=".$row['cameraId']."&userName=".$_SESSION['name']."&carReg=".$row['regPlate']."'>Выписать штраф</a></td>";
 							}
-							echo "</tr>";
+							echo '</tr>';
 						}
-						echo "</table>";
+						echo '</table>';
 					}
 					break;
 				case 'o':
-					if (isset($_GET["factId"])) {
-						$this->setId($_GET["factId"]);
-						$this->setCamId($_GET["cameraId"]);
-						$this->setCarReg($_GET["carReg"]);
-						$this->setFileId($_GET["fileId"]);
-						$this->setStatus($_GET["status"]);
+					if (isset($_GET['factId'])) {
+						$this->setId($_GET['factId']);
+						$this->setCamId($_GET['cameraId']);
+						$this->setCarReg($_GET['carReg']);
+						$this->setFileId($_GET['fileId']);
+						$this->setStatus($_GET['status']);
 
-						echo '<table>';
-						echo '<tr><th>ID факта</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
-						echo "<td>".$this->id."</td>";
-						echo "<td>".$this->camId."</td>";
-						echo "<td>".$this->carReg."</td>";
-						echo "<td>".$this->fileId."</td>";
-						echo "<td>".$this->status."</td>";
-						echo "</table>";
+						echo '<table><tr><th>ID факта</th><th>ID камеры</th><th>Номер ТС</th><th>Ссылка на файл</th><th>Статус</th></tr>';
+						echo '<td>'.$this->id.'</td>';
+						echo '<td>'.$this->camId.'</td>';
+						echo '<td>'.$this->carReg.'</td>';
+						echo '<td>'.$this->fileId.'</td>';
+						echo '<td>'.$this->status.'</td></table>';
 					} else echo 'Выберите факт';
 					break;
 			}
